@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>环形图</title>
+
+    <script src="./js/echarts.js"></script>
+
+</head>
+
+<style>
+    #container {
+        width: 70vw;
+        height: 70vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body>
+<div id="container"></div>
+<script>
+    //初始化echarts实例
+    var chart = echarts.init(document.getElementById('container'));
+
+    // 指定图表的配置项和数据
+    var option =
+        {
+
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left'
+            },
+            series: [
+                {
+                    radius: ['60%', '90%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 50,
+                            fontWeight: 'bold'
+                        }
+                    },
+
+                    data: (function ()
+                    {
+                        var data = [];
+                        for (let i = 0; i < 10; i++)
+                        {
+                            data.push(
+                                {
+                                    name: "测试" + (i + 1),
+                                    value: Math.round(Math.random() * 600 + 100)
+                                }
+                            )
+                        }
+                        return data;
+                    }()),
+                    type: 'pie',
+                }
+            ]
+        };
+
+    //使用刚指定的配置项和数据显示图表
+    chart.setOption(option);
+
+</script>
+
+</body>
+</html>
