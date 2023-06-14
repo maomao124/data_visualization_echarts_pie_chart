@@ -1,0 +1,110 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>半环形图</title>
+
+    <script src="./js/echarts.js"></script>
+
+</head>
+
+<style>
+    #container {
+        width: 70vw;
+        height: 70vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body>
+<div id="container"></div>
+<script>
+    //初始化echarts实例
+    var chart = echarts.init(document.getElementById('container'));
+
+    // 指定图表的配置项和数据
+    var option =
+        {
+
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                selectedMode: false
+            },
+            series: [
+                {
+                    radius: ['35%', '95%'],
+                    center: ['50%', '70%'],
+                    startAngle: 180,
+                    label: {
+                        show: true,
+                        formatter(param)
+                        {
+                            return param.name + ' (' + param.percent * 2 + '%)';
+                        }
+                    },
+                    avoidLabelOverlap: false,
+                    /*label: {
+                        show: false,
+                        position: 'center'
+                    },*/
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 30,
+                            fontWeight: 'bold'
+                        }
+                    },
+
+                    data: (function ()
+                    {
+                        var data = [];
+                        for (let i = 0; i < 10; i++)
+                        {
+                            data.push(
+                                {
+                                    name: "测试" + (i + 1),
+                                    value: Math.round(Math.random() * 600 + 100)
+                                }
+                            )
+                        }
+                        var total = 0;
+                        for (let i = 0; i < data.length; i++)
+                        {
+                            total += data[i].value;
+                        }
+                        console.log(data);
+                        console.log(total);
+                        data.push({
+                            //最后面的50%不显示
+                            value: total,
+                            itemStyle: {
+                                // stop the chart from rendering this piece
+                                color: 'none',
+                                decal: {
+                                    symbol: 'none'
+                                }
+                            },
+                            label: {
+                                show: false
+                            }
+                        })
+
+                        return data;
+                    }()),
+                    type: 'pie',
+                }
+            ]
+        };
+
+    //使用刚指定的配置项和数据显示图表
+    chart.setOption(option);
+
+</script>
+
+</body>
+</html>
